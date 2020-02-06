@@ -13,7 +13,7 @@ module DbmsBuffers
   # but they are not replaced yet (they have a second chance).
   # When an element is accessed that has clock_value = 0, this value is set to 1 again.
   class ClockBuffer
-    attr_reader :size
+    attr_reader :pointer, :size
 
     def initialize(size)
       @size = size
