@@ -12,13 +12,19 @@ module DbmsBuffers
     end
 
     def range(range)
-      @range = range
+      @range = range.to_a
       self
     end
 
-    def next
+    def get
       idx = @rng.rand(@range.size)
       @range[idx]
+    end
+
+    def repeat(amount)
+      result = []
+      amount.times { result << get }
+      result
     end
   end
 end
