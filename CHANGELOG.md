@@ -1,5 +1,11 @@
 ## CHANGELOG
 
-## Current
+## 0.2
+
+* GCLOCK added (thx @N-Schaef)
+* Security updates
+* Small fixes
+
+## 0.1.1
 
 * Gem created, rubocop added.
