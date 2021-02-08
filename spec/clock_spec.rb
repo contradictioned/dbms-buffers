@@ -35,7 +35,7 @@ RSpec.describe DbmsBuffers::ClockBuffer do
     expect(buffer.clock_value_of('b')).to be 1
   end
 
-  it 'gives second change' do
+  it 'gives second chance' do
     buffer = DbmsBuffers::ClockBuffer.new(2)
     buffer.access :a
     buffer.access :b
