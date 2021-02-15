@@ -67,6 +67,7 @@ module DbmsBuffers
       if entry.clock_value.zero?
         entry.value = value
         entry.clock_value = 1
+        advance_pointer
         return true
       end
 
