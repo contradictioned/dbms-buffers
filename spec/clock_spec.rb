@@ -5,11 +5,14 @@ RSpec.describe DbmsBuffers::ClockBuffer do
     buffer = DbmsBuffers::ClockBuffer.new(3)
     expect(buffer.size).to be 3
     expect(buffer.used).to be 0
+    expect(buffer.pointer).to be 0
   end
 
   it 'contains just referenced entry' do
     buffer = DbmsBuffers::ClockBuffer.new(2)
+    expect(buffer.pointer).to be 0
     buffer.access('a')
+    expect(buffer.pointer).to be 1
     expect(buffer.used).to be 1
     expect(buffer.contains?('a')).to be true
     expect(buffer.clock_value_of('a')).to be 1
@@ -17,8 +20,11 @@ RSpec.describe DbmsBuffers::ClockBuffer do
 
   it 'does not contain same entry twice' do
     buffer = DbmsBuffers::ClockBuffer.new(2)
+    expect(buffer.pointer).to be 0
     buffer.access('a')
+    expect(buffer.pointer).to be 1
     buffer.access('a')
+    expect(buffer.pointer).to be 1
     expect(buffer.used).to be 1
     expect(buffer.contains?('a')).to be true
     expect(buffer.clock_value_of('a')).to be 1
@@ -26,8 +32,11 @@ RSpec.describe DbmsBuffers::ClockBuffer do
 
   it 'can hold multiple entries' do
     buffer = DbmsBuffers::ClockBuffer.new(2)
+    expect(buffer.pointer).to be 0
     buffer.access('a')
+    expect(buffer.pointer).to be 1
     buffer.access('b')
+    expect(buffer.pointer).to be 0
     expect(buffer.used).to be 2
     expect(buffer.contains?('a')).to be true
     expect(buffer.clock_value_of('a')).to be 1
@@ -37,9 +46,13 @@ RSpec.describe DbmsBuffers::ClockBuffer do
 
   it 'gives second chance' do
     buffer = DbmsBuffers::ClockBuffer.new(2)
+    expect(buffer.pointer).to be 0
     buffer.access :a
+    expect(buffer.pointer).to be 1
     buffer.access :b
+    expect(buffer.pointer).to be 0
     buffer.access :c
+    expect(buffer.pointer).to be 1
 
     expect(buffer.contains?(:a) ^ buffer.contains?(:b)).to be true
 
